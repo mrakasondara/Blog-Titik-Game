@@ -9,7 +9,7 @@ const Hero = () => {
   const [navigate, setNavigate] = useState(false)
 
   useEffect(()=>{
-    fetch('https://titikgameserver.vercel.app/highlight').then(response=>{
+    fetch('https://blog-titik-game.vercel.app/highlight').then(response=>{
     response.json().then(post=>{
       const index = Math.floor(Math.random()*post.length)
       setHighlight(post[index])
