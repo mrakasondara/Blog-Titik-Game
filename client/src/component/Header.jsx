@@ -29,7 +29,7 @@ const Header = () => {
         <Link to="/">
           <h1 className="text-3xl font-bold text-yellow-500">
             <span className="text-yellow-800">.</span>
-            Game
+            Gameeee
           </h1>
         </Link>
         <div className="flex gap-2 justify-between md:gap-5">
