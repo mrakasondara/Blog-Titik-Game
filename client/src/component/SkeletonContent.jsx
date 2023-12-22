@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import Skeleton from '@mui/material/Skeleton';
 const SkeletonContent = () =>{
 	return(
