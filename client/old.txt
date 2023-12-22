@@ -1,0 +1,23 @@
+<div className="w-full flex gap-3 min-h-1/3 max-h-42 ">
+        <img
+          src={`http://localhost:4000/${thumbnail}`}
+          alt=""
+          className="w-2/5 rounded-lg cursor-pointer max-h-[12rem]"
+          onClick={()=> setLink(true)}
+        />
+      <div className="flex flex-col justify-between ml-2 py-3 px-2 max-w-lg text-slate-700 h-full overflow-hidden">
+        <Link to={`/detailpost/${_id}`} className="text-lg font-semibold cursor-pointer">{title}</Link>
+        <p className="h-1/2 max-h-10 md:max-h-32 text-elipsis overflow-hidden mb-2">
+          {summary}
+        </p>
+        <div className="w-full flex  flex-wrap text-sm  items-center justify-start md:justify-center gap-x-5 lg:gap-x-0 lg:justify-around">
+          <Link to={''} className="transition mb-2 md:mb-0 bg-yellow-300 py-1 px-2 rounded-full text-slate-600 font-bold hover:bg-white hover:border hover:border-yellow-300  hover:text-slate-700">
+            {tag}
+          </Link>
+          <p className="md:mx-5">{format(new Date(createdAt),'MMM d, yyyy HH:mm')}</p>
+          <p className="block w-3/4 md:w-24 font-bold md:text-center pt-2 md:pt-0 md:text-base truncate overflow-hidden">
+            {author.username}
+          </p>
+        </div>
+      </div>
+    </div>
