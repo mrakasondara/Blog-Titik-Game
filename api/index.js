@@ -19,7 +19,7 @@ const secret = '1dhds9sdfs982snqwiqdh'
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 
 app.use(express.json())
-app.use(cors({credentials:true,origin:'http://localhost:5173'}))
+app.use(cors({credentials:true,origin:'https://titikgameserver.vercel.app'}))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
