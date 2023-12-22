@@ -55,7 +55,7 @@ const LoginPage = () => {
           onSubmit={login}
         >
           <div className="flex flex-col w-full gap-2">
-            <label htmlFor="">Username</label>
+            <label htmlFor="">Usernameee</label>
             <input
               type="text"
               name="username"
