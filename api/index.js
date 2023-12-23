@@ -19,11 +19,11 @@ const secret = '1dhds9sdfs982snqwiqdh'
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 
 app.use(express.json())
-app.use(cors({credentials:true,origin:'https://blog-titik-game.vercel.app'}))
+app.use(cors({credentials:true,origin:'https://blog-titik-game.vercel.app/api'}))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-app.post('/register',async (req,res)=>{
+app.post('/api/register',async (req,res)=>{
     const {fullname,username,password} = req.body
     try{
         const create = await User.create({fullname,username,password:bcrypt.hashSync(password,salt)})
@@ -35,7 +35,7 @@ app.post('/register',async (req,res)=>{
     }
     
 })
-app.post('/login',async (req,res)=>{
+app.post('/api/login',async (req,res)=>{
     const {username,password} = req.body
     const loginCheck = await User.findOne({username})
     if(loginCheck === null){
@@ -59,7 +59,7 @@ app.post('/login',async (req,res)=>{
 
 })
 
-app.get('/profile', (req,res)=>{
+app.get('/api/profile', (req,res)=>{
     const {token} = req.cookies
     if(token){
         jwt.verify(token,secret,{},(err,info)=>{
@@ -69,7 +69,7 @@ app.get('/profile', (req,res)=>{
     }
 })
 
-app.post('/logout', (req,res)=>{
+app.post('/api/logout', (req,res)=>{
     res.cookie('token','').json('logout')
 
 })
@@ -91,7 +91,7 @@ const addBlog = (token,title,summary,tag,newPath,content)=>{
 
 
 
-app.post('/createpost', uploadMiddleware.single('file'), async (req,res)=>{
+app.post('/api/createpost', uploadMiddleware.single('file'), async (req,res)=>{
     if(req.file === undefined){
         res.status(400).json('fill the thumbnail')
     }else{
@@ -145,7 +145,7 @@ const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
     })    
 }
 
-app.put('/post',uploadMiddleware.single('file'),async(req,res)=>{
+app.put('/api/post',uploadMiddleware.single('file'),async(req,res)=>{
     let newPath = null
     const {token} = req.cookies
     const {id,title,summary,tag,content} = req.body
@@ -183,7 +183,7 @@ app.put('/post',uploadMiddleware.single('file'),async(req,res)=>{
     
 })
 
-app.get('/post', async (req,res)=>{
+app.get('/api/post', async (req,res)=>{
     res.json(
         await Post.find()
         .populate('author',['username'])
@@ -192,11 +192,11 @@ app.get('/post', async (req,res)=>{
         )
     
 })
-app.get('/highlight', async (req,res)=>{
+app.get('/api/highlight', async (req,res)=>{
     const posts = await Post.find().populate('author',['username'])
     res.json(posts)
 })
-app.get('/detailpost/:id', async(req,res)=>{
+app.get('/api/detailpost/:id', async(req,res)=>{
     const {id} = req.params
     try{
         const detail = await Post.findById(id).populate('author',['username'])
