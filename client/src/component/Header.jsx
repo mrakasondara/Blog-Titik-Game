@@ -7,7 +7,7 @@ const Header = () => {
   const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
 
   useEffect(()=>{
-    fetch('https://server-titik-game.vercell.app/api/profile',{
+    fetch('https://blog-titik-games.vercell.app/api/profile',{
       credentials: 'include',
     }).then(response=>{
       response.json().then(userInfo=>{
@@ -29,7 +29,7 @@ const Header = () => {
         <Link to="/">
           <h1 className="text-3xl font-bold text-yellow-500">
             <span className="text-yellow-800">.</span>
-            Gameeee
+            Game
           </h1>
         </Link>
         <div className="flex gap-2 justify-between md:gap-5">
