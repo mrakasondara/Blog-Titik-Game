@@ -21,7 +21,7 @@ mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mong
 
 const baseUrl = 
 app.use(express.json())
-app.use(cors({credentials:true,origin: import.meta.env.VITE_API_URL }))
+app.use(cors({credentials:true,origin: 'https://blog-titik-games.vercel.app' }))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
