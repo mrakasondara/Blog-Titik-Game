@@ -19,9 +19,9 @@ const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 
-const baseUrl = process.env.VITE_API_URL
+const baseUrl = 
 app.use(express.json())
-app.use(cors({credentials:true,origin: baseUrl }))
+app.use(cors({credentials:true,origin: import.meta.env.VITE_API_URL }))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
@@ -214,10 +214,7 @@ app.get('/api/detailpost/:id', async(req,res)=>{
     
 })
 
-if(process.env.PORT){
-    app.listen(process.env.PORT)
-}
 
-// app.listen(port, ()=>{
-//     console.log(`App Listening on Port ${port}`)
-// })
+app.listen(port, ()=>{
+    console.log(`App Listening on Port ${port}`)
+})
