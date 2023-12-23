@@ -32,14 +32,14 @@ const Hero = () => {
                 width="20px"
               />
         </span>      
-        </div>
+{/*         </div> */}
       </div>
       {isLoading&&(
         <SkeletonHero/>
       )}
       {!isLoading&&(
         <div className="flex-col flex md:flex-row w-full my-5 items-center justify-center px-5">
-            <img src={`https://server-titik-game.vercel.app/api/${highlight?.thumbnail}`} onClick={()=> setNavigate(true)} alt="thumbnail" className="w-full justify-center md:w-2/5 rounded-lg cursor-pointer"/>*/}
+            <img src={`https://server-titik-game.vercel.app/api/${highlight?.thumbnail}`} onClick={()=> setNavigate(true)} alt="thumbnail" className="w-full justify-center md:w-2/5 rounded-lg cursor-pointer"/>
             <div className="md:w-1/2 flex flex-col justify-center items-center gap-2 p-2 mx-10">
             <Link to={`/detailpost/${highlight._id}`} className="text-l text-center font-roboto mt-2">{highlight?.title}</Link>
             <div className="flex justify-center md:justify-start gap-2">
