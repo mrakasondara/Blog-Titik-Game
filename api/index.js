@@ -37,6 +37,11 @@ app.post('/api/register',async (req,res)=>{
     }
     
 })
+
+app.post('/api/hello',async(req,res)=>{
+    console.log('tes')
+}
+
 app.post('/api/login',async (req,res)=>{
     const {username,password} = req.body
     const loginCheck = await User.findOne({username})
