@@ -36,7 +36,6 @@ const Sidebar = ({display,width})=>{
 	  		<div className="flex flex-col items-center gap-2 self-center w-full mt-10">
 	  			{(username)&&(
 	  				<>
-	  				{/*<img src={`src/assets/user/profile.png`} className="w-20" alt=""/>*/}
 	  				<h1 className="text-xl text-slate-100">{username}</h1>
 	  				</>
 	  			)}

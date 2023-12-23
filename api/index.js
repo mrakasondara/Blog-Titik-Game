@@ -16,10 +16,11 @@ const uploadMiddleware = multer({dest: 'uploads/'})
 
 const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
-mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
+// http://localhost:4000
 
+mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 app.use(express.json())
-app.use(cors({credentials:true,origin:'https://blog-titik-game.vercel.app'}))
+app.use(cors({credentials:true,origin:'https://blog-titik-games.vercel.app'}))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
@@ -57,6 +58,10 @@ app.post('/login',async (req,res)=>{
         }
     }
 
+})
+
+app.get('/api/hello', (req,res)=>{
+    res.send('Hello')
 })
 
 app.get('/profile', (req,res)=>{
@@ -183,7 +188,7 @@ app.put('/post',uploadMiddleware.single('file'),async(req,res)=>{
     
 })
 
-app.get('/post', async (req,res)=>{
+app.get('/api/post', async (req,res)=>{
     res.json(
         await Post.find()
         .populate('author',['username'])
