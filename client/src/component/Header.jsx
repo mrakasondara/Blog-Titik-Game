@@ -7,7 +7,7 @@ const Header = () => {
   const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
 
   useEffect(()=>{
-    fetch('http://localhost:4000/profile',{
+    fetch('https://server-titik-game.vercell.app/api/profile',{
       credentials: 'include',
     }).then(response=>{
       response.json().then(userInfo=>{

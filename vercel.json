@@ -3,8 +3,9 @@
 	"outputDirectory": "client/dist",
 	"framework": "vite",
 	"rewrites": [
-	{
-		"source": "/api/(.*)",
-		"destination": "/api"
-	}]
+		{
+		"source": "/api/(.*)", 
+		"destination": "/api" 
+		}
+	]
 }
