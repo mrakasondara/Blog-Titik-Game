@@ -22,7 +22,7 @@ const Hero = () => {
   }
   return (
     <div className="w-full flex flex-col items-center gap-5">
-      <div className='w-3/4 md:w-2/4 relative flex bg-[url(https://titikgameserver.vercel.app/uploads/hero.png)] bg-cover bg-center justify-center items-center h-20 rounded-lg'>
+      <div className='w-3/4 md:w-2/4 relative flex bg-[url(https://blog-titik-game.vercel.app/uploads/hero.png)] bg-cover bg-center justify-center items-center h-20 rounded-lg'>
       <h1 className="text-2xl text-white font-fira">Blog</h1>
         <div className="flex absolute w-3/4 md:w-1/2 h-10 bg-indigo-500 top-[75%] rounded-lg items-center ">
         <input className="absolute w-[90%] h-10 bg-transparent rounded-lg text-white font-roboto px-3 outline-none" placeholder="Search"/>
