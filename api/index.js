@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const fs = require('fs')
+const env = require('dotenv')
 const User = require('./model/User')
 const Post = require('./model/Post')
 
@@ -18,8 +19,9 @@ const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 
+const baseUrl = import.meta.env.VITE_API_URL
 app.use(express.json())
-app.use(cors({credentials:true,origin:'https://server-titik-game.vercel.app'}))
+app.use(cors({credentials:true,origin: baseUrl }))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
@@ -207,6 +209,10 @@ app.get('/api/detailpost/:id', async(req,res)=>{
     
 })
 
-app.listen(port, ()=>{
-    console.log(`App Listening on Port ${port}`)
-})
+if(process.env.PORT){
+    app.listen(process.env.PORT)
+}
+
+// app.listen(port, ()=>{
+//     console.log(`App Listening on Port ${port}`)
+// })
