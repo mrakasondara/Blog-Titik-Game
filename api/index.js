@@ -11,7 +11,7 @@ const User = require('./model/User')
 const Post = require('./model/Post')
 
 const app = express()
-const port = 4000
+const port = process.env.port || 4000
 
 const uploadMiddleware = multer({dest: 'uploads/'})
 
@@ -65,7 +65,6 @@ app.post('/api/login',async (req,res)=>{
 
 })
 
-<<<<<<< HEAD
 app.get('/api/hello', (req,res)=>{
     res.send('Hello')
 })
@@ -223,3 +222,6 @@ app.get('/api/detailpost/:id', async(req,res)=>{
 app.listen(port, ()=>{
     console.log(`App Listening on Port ${port}`)
 })
+
+
+module.exports = app
