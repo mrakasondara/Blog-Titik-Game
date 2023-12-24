@@ -24,7 +24,7 @@ app.use(cors({credentials:true,origin:'https://blog-titik-games.vercel.app'}))
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-app.post('/api/register',async (req,res)=>{
+app.post('/register',async (req,res)=>{
     const {fullname,username,password} = req.body
     try{
         const create = await User.create({fullname,username,password:bcrypt.hashSync(password,salt)})
@@ -37,11 +37,17 @@ app.post('/api/register',async (req,res)=>{
     
 })
 
-app.post('/api/hello',async(req,res)=>{
+app.get('/', (req,res)=>{
+    res.setHeader('Content-Type', 'text/html')
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
+})
+
+
+app.post('/hello',async(req,res)=>{
     console.log('tes')
 }
 
-app.post('/api/login',async (req,res)=>{
+app.post('/login',async (req,res)=>{
     const {username,password} = req.body
     const loginCheck = await User.findOne({username})
     if(loginCheck === null){
@@ -65,12 +71,12 @@ app.post('/api/login',async (req,res)=>{
 
 })
 
-app.get('/api/hello', (req,res)=>{
+app.get('/hello', (req,res)=>{
     res.send('Hello')
 })
 
 
-app.get('/api/profile', (req,res)=>{
+app.get('/profile', (req,res)=>{
     const {token} = req.cookies
     if(token){
         jwt.verify(token,secret,{},(err,info)=>{
@@ -80,7 +86,7 @@ app.get('/api/profile', (req,res)=>{
     }
 })
 
-app.post('/api/logout', (req,res)=>{
+app.post('/logout', (req,res)=>{
     res.cookie('token','').json('logout')
 
 })
@@ -102,7 +108,7 @@ const addBlog = (token,title,summary,tag,newPath,content)=>{
 
 
 
-app.post('/api/createpost', uploadMiddleware.single('file'), async (req,res)=>{
+app.post('/createpost', uploadMiddleware.single('file'), async (req,res)=>{
     if(req.file === undefined){
         res.status(400).json('fill the thumbnail')
     }else{
@@ -156,7 +162,7 @@ const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
     })    
 }
 
-app.put('/api/post',uploadMiddleware.single('file'),async(req,res)=>{
+app.put('/post',uploadMiddleware.single('file'),async(req,res)=>{
     let newPath = null
     const {token} = req.cookies
     const {id,title,summary,tag,content} = req.body
@@ -194,7 +200,7 @@ app.put('/api/post',uploadMiddleware.single('file'),async(req,res)=>{
     
 })
 
-app.get('/api/post', async (req,res)=>{
+app.get('/post', async (req,res)=>{
     res.json(
         await Post.find()
         .populate('author',['username'])
@@ -203,11 +209,11 @@ app.get('/api/post', async (req,res)=>{
         )
     
 })
-app.get('/api/highlight', async (req,res)=>{
+app.get('/highlight', async (req,res)=>{
     const posts = await Post.find().populate('author',['username'])
     res.json(posts)
 })
-app.get('/api/detailpost/:id', async(req,res)=>{
+app.get('/detailpost/:id', async(req,res)=>{
     const {id} = req.params
     try{
         const detail = await Post.findById(id).populate('author',['username'])
