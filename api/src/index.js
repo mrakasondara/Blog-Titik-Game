@@ -7,8 +7,8 @@ const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const fs = require('fs')
 const env = require('dotenv')
-const User = require('./model/User')
-const Post = require('./model/Post')
+const User = require('../model/User')
+const Post = require('../model/Post')
 
 const app = express()
 const port = process.env.port || 4000
