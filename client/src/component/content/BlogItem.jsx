@@ -4,10 +4,12 @@ import {format} from 'date-fns'
 import {CalendarClearOutline} from 'react-ionicons'
 const BlogItem = ({_id,thumbnail,title,summary,tag,createdAt,author}) => {
   const [link, setLink] = useState(false)
+  const urlImage = 'https://res.cloudinary.com/dxs0jt3xe/image/upload/v1704103187/'
+
   return (
     <div className="w-[45%] flex-col lg:w-[30%] ">
      <Link to={`/detailpost/${_id}`}>
-      <img className="rounded-lg w-full" src={`https://api-tes-rho.vercel.app/${thumbnail}`} alt=""/>
+      <img className="rounded-lg w-full" src={`${urlImage}/${thumbnail}`} alt=""/>
       </Link>
       <div className="flex w-full justify-center text-center">
         <Link to={`/detailpost/${_id}`}>
