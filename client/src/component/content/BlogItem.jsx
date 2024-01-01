@@ -7,7 +7,7 @@ const BlogItem = ({_id,thumbnail,title,summary,tag,createdAt,author}) => {
   return (
     <div className="w-[45%] flex-col lg:w-[30%] ">
      <Link to={`/detailpost/${_id}`}>
-      <img className="rounded-lg w-full" src={`http://localhost:4000/${thumbnail}`} alt=""/>
+      <img className="rounded-lg w-full" src={`https://api-tes-rho.vercel.app/${thumbnail}`} alt=""/>
       </Link>
       <div className="flex w-full justify-center text-center">
         <Link to={`/detailpost/${_id}`}>
