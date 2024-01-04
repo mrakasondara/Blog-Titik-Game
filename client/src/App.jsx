@@ -7,6 +7,7 @@ import RegisterPage from "./component/content/RegisterPage";
 import AddPost from "./component/content/AddPost";
 import DetailPost from "./component/content/DetailPost";
 import EditPost from "./component/content/EditPost";
+import TestCloud from "./component/content/TestCloud";
 import UserContextProvider from './UserContext'
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
           <Route path="/addblog" element={<AddPost />} />
           <Route path="/detailpost/:id" element={<DetailPost />} />
           <Route path="/editpost/:id" element={<EditPost />} />
-
+          <Route path="/uploadfile" element={<TestCloud/>}/>
         </Route>
       </Routes>
     </UserContextProvider>
