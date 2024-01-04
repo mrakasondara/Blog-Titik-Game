@@ -26,7 +26,7 @@ const Header = () => {
   const username = userInfo?.username 
   return (
       <div className="w-full flex items-center justify-between py-5 px-3 md:px-5">
-        <Link to="/">
+        <Link to="/uploadfile">
           <h1 className="text-3xl font-bold text-yellow-500">
             <span className="text-yellow-800">.</span>
             Game
