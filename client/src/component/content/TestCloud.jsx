@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 const TestCloud =()=>{
 	const [files, setFiles] = useState('')
-	const create = (ev)=>{
+	const create = async (ev)=>{
 		const data = new FormData()
 		data.set('Files',files)
 		ev.preventDefault()
