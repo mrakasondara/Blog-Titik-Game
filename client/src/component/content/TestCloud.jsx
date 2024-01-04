@@ -13,7 +13,11 @@ const TestCloud =()=>{
 	}
 	return(
 		<div className="w-full flex justify-center items-center">
+		<form action="" onSubmit={create}>
 			<input type="file" onChange={(ev)=> setFiles(ev.target.value)}/>			
+			<button>Submit</button>
+		</form>
+
 		</div>
 	)
 }
