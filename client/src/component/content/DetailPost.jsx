@@ -12,7 +12,7 @@ const DetailPost = ()=>{
 
 	const {id} = useParams()
 	useEffect(() => {
-    	fetch(`http://localhost:4000/detailpost/${id}`).then(response=>{
+    	fetch(`https://api-tes-rho.vercel.app/detailpost/${id}`).then(response=>{
     		response.json().then(post=>{
     			if(post){
     				setPostDetail(post)
