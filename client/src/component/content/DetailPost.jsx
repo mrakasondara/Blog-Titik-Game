@@ -10,6 +10,8 @@ const DetailPost = ()=>{
 	const [isLoading, setIsLoading] = useState(true)
 	const [isNotFound, setIsNotFound] = useState(false)
 
+  	const urlImage = 'https://res.cloudinary.com/dxs0jt3xe/image/upload/v1704103187/'
+
 	const {id} = useParams()
 	useEffect(() => {
     	fetch(`https://api-tes-rho.vercel.app/detailpost/${id}`).then(response=>{
@@ -58,7 +60,7 @@ const DetailPost = ()=>{
 							<p className="font-semibold">Edit Postingan</p>
 						</Link>
 					)}
-				<img className="h-[300px] md:w-1/2  md:h-[350px] rounded-lg" src={`http://localhost:4000/${postDetail?.thumbnail}`}/>
+				<img className="h-[300px] md:w-1/2  md:h-[350px] rounded-lg" src={`${urlImage}/${postDetail.thumbnail}`}/>
 				<div className="w-full flex-col text-sm text-slate-400">
 					<div className="w-full flex justify-between">
 						<p>Author</p>
