@@ -5,7 +5,8 @@ const TestCloud =()=>{
 		const data = new FormData()
 		data.set('Files',files)
 		ev.preventDefault()
-		await fetch('https://api-tes-rho.vercel.app/post',{
+
+		await fetch('https://api-tes-rho.vercel.app/upload',{
 			method: 'POST',
 			body: data,
 			credentials: 'include'
