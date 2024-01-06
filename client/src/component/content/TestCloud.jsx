@@ -1,9 +1,9 @@
 import React,{useState} from 'react'
 const TestCloud =()=>{
-	const [files, setFiles] = useState('')
+	const [file, setFile] = useState('')
 	const create = async (ev)=>{
 		const data = new FormData()
-		data.set('Files',files)
+		data.set('file',file)
 		ev.preventDefault()
 
 		await fetch('https://api-tes-rho.vercel.app/upload',{
@@ -15,7 +15,7 @@ const TestCloud =()=>{
 	return(
 		<div className="w-full flex justify-center items-center">
 		<form action="" onSubmit={create}>
-			<input type="file" onChange={(ev)=> setFiles(ev.target.value)}/>			
+			<input type="file" onChange={(ev)=> setFile(ev.target.files)}/>			
 			<button>Submit</button>
 		</form>
 
