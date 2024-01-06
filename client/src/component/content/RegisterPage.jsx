@@ -10,7 +10,7 @@ const RegisterPage = () => {
   const [statusNotif, setStatusNotif] = useState(false)
   async function register(ev){
     ev.preventDefault()
-    const response = await fetch('http://localhost:4000/register',{
+    const response = await fetch('https://api-tes-rho.vercel.app/register',{
       method: 'POST',
       body: JSON.stringify({fullname,username,password}),
       headers: {'Content-type':'application/json'},
