@@ -1,21 +1,29 @@
 import React,{useState} from 'react'
 const TestCloud =()=>{
-	const [file, setFile] = useState('')
-	const create = async (ev)=>{
-		const data = new FormData()
-		data.set('file',file)
-		ev.preventDefault()
+	const [files, setFiles] = useState('')
+	const [name, setName] = useState('')
 
-		await fetch('https://api-tes-rho.vercel.app/upload',{
+	async function createUpload(ev){
+
+		ev.preventDefault()
+		const data = new FormData()
+	    data.set('file',files[0])
+	    data.set('name',name)
+
+
+		await fetch('http://localhost:4000/upload',{
 			method: 'POST',
 			body: data,
 			credentials: 'include'
 		})
+
+		console.log('tea')
 	}
-	return(
+	return( 
 		<div className="w-full flex justify-center items-center">
-		<form action="" onSubmit={create}>
-			<input type="file" onChange={(ev)=> setFile(ev.target.files)}/>			
+		<form action="" onSubmit={createUpload}>
+		     <input type="text" onChange={ev=> setName(ev.target.value)}/>
+			<input type="file"  onChange={ev=> setFiles(ev.target.files)}/>			
 			<button>Submit</button>
 		</form>
 
