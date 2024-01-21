@@ -15,6 +15,7 @@ const AddBlog = () => {
   const [redirect, setRedirect] = useState(false)
   useEffect(()=>{
     fetch('https://api-tes-rho.vercel.app/profile',{
+      headers: {'Content-Type':'application/json'},
       credentials: 'include',
     }).then(response=>{
       response.json().then(userInfo=>{
@@ -37,6 +38,7 @@ const AddBlog = () => {
     const response = await fetch('https://api-tes-rho.vercel.app/createpost',{
       method: 'POST',
       body: data,
+      headers: {'Content-Type':'application/json'},
       credentials: 'include'
     })
     if(response.ok){
