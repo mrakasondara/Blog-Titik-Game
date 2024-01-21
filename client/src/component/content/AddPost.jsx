@@ -37,7 +37,6 @@ const AddBlog = () => {
     const response = await fetch('https://api-tes-rho.vercel.app/createpost',{
       method: 'POST',
       body: data,
-      headers: {'Content-Type':'application/json'},
       credentials: 'include'
     })
     if(response.ok){
