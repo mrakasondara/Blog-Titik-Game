@@ -1,28 +1,8 @@
 {
-	"routes": [
-	{
-		"src": "/",
-		"dest": "/"
-	},
-	{
-		"src": "/login",
-		"dest": "/"
-	},
-	{
-		"src": "/register",
-		"dest": "/"
-	},
-	{
-		"src": "/addblog",
-		"dest": "/"
-	},
-	{
-		"src": "/detailpost",
-		"dest": "",
-	},
-	{
-		"src": "/editpost",
-		"dest": "",
-	},
+	"rewrites": [
+		{
+			"source": "(/.*)",
+			"destionation": "/"
+		}
 	]
 }
