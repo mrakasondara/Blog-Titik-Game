@@ -53,7 +53,7 @@ app.post('/register',async (req,res)=>{
 })
 
 
-app.post('/login',async (req,res)=>{
+app.post('/api/login',async (req,res)=>{
     const {username,password} = req.body
     const loginCheck = await User.findOne({username})
     if(loginCheck === null){
@@ -77,7 +77,7 @@ app.post('/login',async (req,res)=>{
 
 })
 
-app.get('/profile', (req,res)=>{
+app.get('/api/profile', (req,res)=>{
     const {token} = req.cookies
     if(token){
         jwt.verify(token,secret,{},(err,info)=>{
@@ -87,7 +87,7 @@ app.get('/profile', (req,res)=>{
     }
 })
 
-app.post('/logout', (req,res)=>{
+app.post('/api/logout', (req,res)=>{
     res.cookie('token','').json('logout')
 
 })
@@ -114,7 +114,7 @@ const addBlog = (token,title,summary,tag,newPath,content)=>{
 
 
 
-app.post('/createpost', upload.single('file'), async (req,res)=>{
+app.post('/api/createpost', upload.single('file'), async (req,res)=>{
     if(req.file === undefined){
         res.status(400).json('fill the thumbnail')
     }else{
@@ -207,7 +207,7 @@ const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
     
 // })
 
-app.get('/post', async (req,res)=>{
+app.get('/api/post', async (req,res)=>{
     res.json(
         await Post.find()
         .populate('author',['username'])
@@ -216,11 +216,11 @@ app.get('/post', async (req,res)=>{
         )
     
 })
-app.get('/highlight', async (req,res)=>{
+app.get('/api/highlight', async (req,res)=>{
     const posts = await Post.find().populate('author',['username'])
     res.json(posts)
 })
-app.get('/detailpost/:id', async(req,res)=>{
+app.get('/api/detailpost/:id', async(req,res)=>{
     const {id} = req.params
     try{
         const detail = await Post.findById(id).populate('author',['username'])
