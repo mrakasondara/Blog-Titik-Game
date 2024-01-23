@@ -11,7 +11,7 @@ const LoginPage = () => {
  const {setUserInfo} = useContext(UserContext)
  async function login(ev){
     ev.preventDefault()
-    const response = await fetch('https://api-tes-rho.vercel.app/login',{
+    const response = await fetch('https://blog-titik-game.vercel.app/api/login',{
       method: 'POST',
       body: JSON.stringify({username,password}),
       headers: {'Content-Type':'application/json'},
