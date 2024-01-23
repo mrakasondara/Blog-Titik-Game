@@ -7,7 +7,7 @@ const Header = () => {
   const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
 
   useEffect(()=>{
-    fetch('https://blog-titik-game.vercel.app/api/profile',{
+    fetch('https://api-tes-rho.vercel.app/profile',{
       credentials: 'include',
     }).then(response=>{
       response.json().then(userInfo=>{
@@ -16,7 +16,7 @@ const Header = () => {
     })
   },[])
   function logout(){
-    fetch('https://blog-titik-game.vercel.app/api/logout',{
+    fetch('https://api-tes-rho.vercel.app/logout',{
       credentials: 'include',
       method: 'POST',
     });

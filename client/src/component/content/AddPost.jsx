@@ -14,7 +14,7 @@ const AddBlog = () => {
   const [content, setContent] = useState('')
   const [redirect, setRedirect] = useState(false)
   useEffect(()=>{
-    fetch('https://blog-titik-game.vercel.app/api/profile',{
+    fetch('https://api-tes-rho.vercel.app/profile',{
       credentials: 'include',
     }).then(response=>{
       response.json().then(userInfo=>{
@@ -33,7 +33,7 @@ const AddBlog = () => {
     data.set('content',content)
 
     ev.preventDefault()
-    const response = await fetch('https://blog-titik-game.vercel.app/api/createpost',{
+    const response = await fetch('https://api-tes-rho.vercel.app/createpost',{
       method: 'POST',
       body: data,
       credentials: 'include'
