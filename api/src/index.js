@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
-const fs = require('fs')
+// const fs = require('fs')
 const env = require('dotenv')
 const User = require('../model/User')
 const Post = require('../model/Post')
@@ -40,6 +40,7 @@ cloudinary.config({
 })
 
 app.post('/register',async (req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const {fullname,username,password} = req.body
     try{
         const create = await User.create({fullname,username,password:bcrypt.hashSync(password,salt)})
@@ -169,43 +170,43 @@ const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
     })    
 }
 
-// app.put('/post',uploadMiddleware.single('file'),async(req,res)=>{
-//     let newPath = null
-//     const {token} = req.cookies
-//     const {id,title,summary,tag,content} = req.body
-//     const postDoc = await Post.findById(id)
-//     if(req.file){
-//         const {originalname,path} = req.file
-//         const parts = originalname.split('.')
-//         const ext = parts[parts.length - 1]
-//         const lowerExt = ext.toLowerCase()
-//         newPath = path+'.'+ext
-//         fs.renameSync(path, newPath)
-//         switch(lowerExt){
-//             case 'jpg':
-//             editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-//             res.status(200).json(postDoc)
-//             break;
-//             case 'jpeg':
-//             editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-//             res.status(200).json(postDoc)
-//             break;
-//             case 'png':
-//             editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-//             res.status(200).json(postDoc)
-//             break;
-//             case 'webp':
-//             editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-//             res.status(200).json(postDoc)
-//             break;
-//             default:
-//             res.status(400).json('image only')
-//         }
-//     }
-//     editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-//     res.status(200).json(postDoc)
+app.put('/post',upload.single('file'),async(req,res)=>{
+    let newPath = null
+    const {token} = req.cookies
+    const {id,title,summary,tag,content} = req.body
+    const postDoc = await Post.findById(id)
+    if(req.file){
+        const {originalname,path} = req.file
+        const parts = originalname.split('.')
+        const ext = parts[parts.length - 1]
+        const lowerExt = ext.toLowerCase()
+        newPath = path+'.'+ext
+        // fs.renameSync(path, newPath)
+        switch(lowerExt){
+            case 'jpg':
+            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
+            res.status(200).json(postDoc)
+            break;
+            case 'jpeg':
+            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
+            res.status(200).json(postDoc)
+            break;
+            case 'png':
+            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
+            res.status(200).json(postDoc)
+            break;
+            case 'webp':
+            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
+            res.status(200).json(postDoc)
+            break;
+            default:
+            res.status(400).json('image only')
+        }
+    }
+    editBlog(token,id,title,summary,tag,newPath,content,postDoc)
+    res.status(200).json(postDoc)
     
-// })
+})
 
 app.get('/test', (req,res)=>{
     res.json('test').status(200)
@@ -241,8 +242,5 @@ app.listen(port, ()=>{
 })
 
 
-// cloudinary.uploader.upload(path, {folder: 'uploads'}).then(result=>{
- //                newName = result.public_id + '.' + result.format
- //    })
 
 module.exports = app
