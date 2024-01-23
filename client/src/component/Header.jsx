@@ -8,7 +8,6 @@ const Header = () => {
 
   useEffect(()=>{
     fetch('https://api-tes-rho.vercel.app/profile',{
-      headers: {'Content-Type':'application/json'},
       credentials: 'include',
     }).then(response=>{
       response.json().then(userInfo=>{
