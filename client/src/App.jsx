@@ -8,6 +8,9 @@ import AddPost from "./component/content/AddPost";
 import DetailPost from "./component/content/DetailPost";
 import EditPost from "./component/content/EditPost";
 import TestCloud from "./component/content/TestCloud";
+import TagPage from "./component/content/TagPage";
+import SearchPage from "./component/content/SearchPage";
+
 import UserContextProvider from './UserContext'
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
           <Route path="/detailpost/:id" element={<DetailPost />} />
           <Route path="/editpost/:id" element={<EditPost />} />
           <Route path="/uploadfile" element={<TestCloud/>}/>
+          <Route path="/tag/:tagParams" element={<TagPage/>}/>
+          <Route path="/search/:query" element={<SearchPage/>}/>
+
         </Route>
       </Routes>
     </UserContextProvider>

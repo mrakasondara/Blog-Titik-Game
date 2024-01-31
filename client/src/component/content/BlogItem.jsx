@@ -7,9 +7,9 @@ const BlogItem = ({_id,thumbnail,title,summary,tag,createdAt,author}) => {
   const urlImage = 'https://res.cloudinary.com/dxs0jt3xe/image/upload/v1704103187/'
 
   return (
-    <div className="w-[45%] flex-col lg:w-[30%] ">
+    <div className="max-w-[45%] flex-col lg:max-w-[30%]">
      <Link to={`/detailpost/${_id}`}>
-      <img className="rounded-lg w-full" src={`${urlImage}/${thumbnail}`} alt=""/>
+      <img className="rounded-lg w-full h-1/2" src={`${urlImage}/${thumbnail}`} alt=""/>
       </Link>
       <div className="flex w-full justify-center text-center">
         <Link to={`/detailpost/${_id}`}>
@@ -31,7 +31,9 @@ const BlogItem = ({_id,thumbnail,title,summary,tag,createdAt,author}) => {
           <p className="text-[15px] font-fira">{summary}</p>
       </div>
       <div className="flex justify-center md:justify-start">
-        <p className="bg-indigo-500 justify-center font-roboto text-slate-50 inline rounded-xl px-3 border hover:bg-white hover:border-indigo-500 hover:text-indigo-500 cursor-pointer transition">{tag}</p>
+        <Link to={`/tag/${tag}`}>
+          <p className="bg-indigo-500 justify-center font-roboto text-slate-50 inline rounded-xl px-3 border hover:bg-white hover:border-indigo-500 hover:text-indigo-500 cursor-pointer transition">{tag}</p>
+        </Link>
       </div>
     </div>
   );

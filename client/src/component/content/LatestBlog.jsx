@@ -33,7 +33,7 @@ const LatestBlog = () => {
         </> 
       )}
       {!isLoading&&(
-        (posts.length > 1 && posts.map(post=>(
+        (posts.length >= 1 && posts.map(post=>(
                     <BlogItem {...post} key={post._id}/>
         )))
       )}
