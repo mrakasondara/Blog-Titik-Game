@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
 // const fs = require('fs')
-const env = require('dotenv')
+// const env = require('dotenv')
 const User = require('../model/User')
 const Post = require('../model/Post')
 
@@ -18,11 +18,12 @@ const port = process.env.port || 4000
 
 const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
-// http://localhost:4000
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 app.use(express.json())
-app.use(cors({credentials:true,origin:'https://blog-titik-game.vercel.app'}))
+// app.use(cors({credentials:true,origin:'https://blog-titik-game.vercel.app'}))
 app.use(cookieParser())
+app.use(cors({credentials:true,origin:'http://localhost:5173'}))
+
 // app.use('/uploads', express.static(__dirname + '/uploads'));
 
 const storage = multer.diskStorage({
@@ -56,6 +57,7 @@ app.post('/register',async (req,res)=>{
 
 app.post('/login',async (req,res)=>{
     const {username,password} = req.body
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const loginCheck = await User.findOne({username})
     if(loginCheck === null){
         res.status(400).json()
@@ -93,26 +95,6 @@ app.post('/logout', (req,res)=>{
 
 })
 
-const addBlog = (token,title,summary,tag,newPath,content)=>{
-    jwt.verify(token,secret,{}, async (err,info)=>{
-        if(err)throw err;
-         let newName
-            cloudinary.uploader.upload(path, {folder: 'uploads'}).then(result=>{
-                newName = result.public_id + '.' + result.format
-            })
-            mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
-            postDoc = await Post.create({
-                title,
-                summary,
-                tag,
-                thumbnail:newName,
-                content,
-                author:info.id,
-            })
-    })
-
-}
-
 
 
 app.post('/createpost', upload.single('file'), async (req,res)=>{
@@ -124,34 +106,70 @@ app.post('/createpost', upload.single('file'), async (req,res)=>{
         const ext = parts[parts.length - 1]
         const lowerExt = ext.toLowerCase()
         // const newPath = path+'.'+ext
-        let postDoc
+        let postDoc, result
         const {token} = req.cookies
         const {title,summary,tag,content} = req.body
         // fs.renameSync(path, newPath)
-        switch(lowerExt){
+        jwt.verify(token,secret,{}, async (err,info)=>{
+            if(err)throw err;
+            switch(lowerExt){
             case 'jpg':
-            addBlog(token,title,summary,tag,path,content)
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                postDoc =  await Post.create({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: result.public_id+ '.' + result.format,
+                    content,
+                    author:info.id,
+                })
             res.status(200).json(postDoc)
             break;
             case 'jpeg':
-            addBlog(token,title,summary,tag,path,content)
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                postDoc =  await Post.create({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: result.public_id+ '.' + result.format,
+                    content,
+                    author:info.id,
+                })
             res.status(200).json(postDoc)
             break;
             case 'png':
-            addBlog(token,title,summary,tag,path,content)
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                postDoc =  await Post.create({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: result.public_id+ '.' + result.format,
+                    content,
+                    author:info.id,
+                })
             res.status(200).json(postDoc)
             break;
             case 'webp':
-            addBlog(token,title,summary,tag,path,content)
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                postDoc =  await Post.create({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: result.public_id+ '.' + result.format,
+                    content,
+                    author:info.id,
+                })
             res.status(200).json(postDoc)
             break;
             default:
             res.status(400).json('image only')
-        }
+            }
+        })
     }
 })
 
 const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     jwt.verify(token, secret, {}, async(err,info)=>{
         if(err) throw err
         const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id)
@@ -208,11 +226,8 @@ app.put('/post',upload.single('file'),async(req,res)=>{
     
 })
 
-app.get('/test', (req,res)=>{
-    res.json('test').status(200)
-})
-
 app.get('/post', async (req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     res.json(
         await Post.find()
         .populate('author',['username'])
@@ -222,10 +237,12 @@ app.get('/post', async (req,res)=>{
     
 })
 app.get('/highlight', async (req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const posts = await Post.find().populate('author',['username'])
     res.json(posts)
 })
 app.get('/detailpost/:id', async(req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const {id} = req.params
     try{
         const detail = await Post.findById(id).populate('author',['username'])
@@ -236,6 +253,34 @@ app.get('/detailpost/:id', async(req,res)=>{
     
 })
 
+app.get('/tag/:tagParams', async(req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
+    const {tagParams} = req.params
+    try{
+        res.json(await Post.find({tag: tagParams})
+        .populate('author', ['username'])
+        .sort({createdAt: -1}))
+    }catch(e){
+        res.status(404).json(e)
+    }
+})
+
+app.get('/search/:query', async(req,res)=>{
+    const {query} = req.params
+ 
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
+    try{
+        const searchByTitle = await Post.find({ title: { $regex: query, $options: "i" } }).populate('author', ['username']) 
+        const searchBySummary = await Post.find({ summary: { $regex: query, $options: "i" } }).populate('author', ['username']) 
+        const removeDuplicate = Object.assign(searchByTitle,searchBySummary)
+        res.json(removeDuplicate)
+
+    }catch(e){
+        res.json('result not found').status(404)
+    }
+    
+
+})
 
 app.listen(port, ()=>{
     console.log(`App Listening on Port ${port}`)
