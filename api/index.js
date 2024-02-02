@@ -20,14 +20,8 @@ const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 app.use(express.json())
-<<<<<<< HEAD
 app.use(cookieParser())
 app.use(cors({credentials:true,origin:'https://blog-titikgame.vercel.app'}))
-=======
-app.use(cors({credentials:true,origin:'https://blog-titikgame.vercel.app'}))
-app.use(cookieParser())
-// app.use(cors({credentials:true,origin:'http://localhost:5173'}))
->>>>>>> b5f2678633f1745d7fb91d39803b72a454206dac
 
 
 const storage = multer.diskStorage({
