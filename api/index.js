@@ -231,7 +231,7 @@ app.put('/post',upload.single('file'),async(req,res)=>{
     
 })
 
-app.get('/post', async (req,res)=>{
+app.get('/api/post', async (req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     res.json(
         await Post.find()
