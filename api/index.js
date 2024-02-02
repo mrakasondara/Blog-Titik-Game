@@ -8,8 +8,8 @@ const multer = require('multer')
 const cloudinary = require('cloudinary').v2
 // const fs = require('fs')
 // const env = require('dotenv')
-const User = require('../model/User')
-const Post = require('../model/Post')
+const User = require('./model/User')
+const Post = require('./model/Post')
 
 const app = express()
 const port = process.env.port || 4000
@@ -82,12 +82,13 @@ app.post('/login',async (req,res)=>{
 
 app.get('/profile', (req,res)=>{
     const {token} = req.cookies
-    if(token){
+    // if(token){
         jwt.verify(token,secret,{},(err,info)=>{
             if(err)throw err
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
             res.json(info)
         } )
-    }
+    // }
 })
 
 app.post('/logout', (req,res)=>{
@@ -123,6 +124,7 @@ app.post('/createpost', upload.single('file'), async (req,res)=>{
                     content,
                     author:info.id,
                 })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
             res.status(200).json(postDoc)
             break;
             case 'jpeg':
@@ -135,6 +137,7 @@ app.post('/createpost', upload.single('file'), async (req,res)=>{
                     content,
                     author:info.id,
                 })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
             res.status(200).json(postDoc)
             break;
             case 'png':
@@ -147,6 +150,7 @@ app.post('/createpost', upload.single('file'), async (req,res)=>{
                     content,
                     author:info.id,
                 })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
             res.status(200).json(postDoc)
             break;
             case 'webp':
@@ -159,6 +163,7 @@ app.post('/createpost', upload.single('file'), async (req,res)=>{
                     content,
                     author:info.id,
                 })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
             res.status(200).json(postDoc)
             break;
             default:

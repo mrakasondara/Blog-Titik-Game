@@ -7,7 +7,7 @@ const BlogItem = ({_id,thumbnail,title,summary,tag,createdAt,author}) => {
   const urlImage = 'https://res.cloudinary.com/dxs0jt3xe/image/upload/v1704103187/'
 
   return (
-    <div className="max-w-[45%] flex-col lg:max-w-[30%]">
+    <div className="min-w-[25%] max-w-[45%] flex-col lg:max-w-[30%]">
      <Link to={`/detailpost/${_id}`}>
       <img className="rounded-lg w-full h-1/2" src={`${urlImage}/${thumbnail}`} alt=""/>
       </Link>
