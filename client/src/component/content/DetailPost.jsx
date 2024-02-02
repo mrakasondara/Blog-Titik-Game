@@ -14,7 +14,7 @@ const DetailPost = ()=>{
 
 	const {id} = useParams()
 	useEffect(() => {
-    	fetch(`https://api-tes-rho.vercel.app/detailpost/${id}`).then(response=>{
+    	fetch(`https://blog-titikgame.vercel.app/api/detailpost/${id}`).then(response=>{
     		response.json().then(post=>{
     			if(post){
     				setPostDetail(post)

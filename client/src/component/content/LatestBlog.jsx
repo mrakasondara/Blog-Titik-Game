@@ -5,7 +5,7 @@ const LatestBlog = () => {
   const [posts,setPosts] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   useEffect(()=>{
-    fetch(`https://blogtitik-game.vercel.app/api/post`).then(response=>{
+    fetch(`https://blog-titikgame.vercel.app/api/post`).then(response=>{
       response.json().then(posts=>{
         setPosts(posts)
         setIsLoading(false)

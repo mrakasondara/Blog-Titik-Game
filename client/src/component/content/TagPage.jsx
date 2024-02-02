@@ -9,7 +9,7 @@ const TagPage = ()=>{
 	const {tagParams} = useParams()
 
 	useEffect(()=>{
-		fetch(`https://api-tes-rho.vercel.app/tag/${tagParams}`).then(response=>{
+		fetch(`https://blog-titikgame.vercel.app/api/tag/${tagParams}`).then(response=>{
 				response.json().then(tag=>{
 					setTags(tag)
 					setIsLoading(false)

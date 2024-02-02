@@ -20,11 +20,9 @@ const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
 mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority')            
 app.use(express.json())
-// app.use(cors({credentials:true,origin:'https://blog-titik-game.vercel.app'}))
 app.use(cookieParser())
-app.use(cors({credentials:true,origin:'http://localhost:5173'}))
+app.use(cors({credentials:true,origin:'https://blog-titikgame.vercel.app'}))
 
-// app.use('/uploads', express.static(__dirname + '/uploads'));
 
 const storage = multer.diskStorage({
     filename: function(req,file,cb){
@@ -40,7 +38,7 @@ cloudinary.config({
     api_secret:'DuGN2Yq0sYUfzvCDnAQf9nLhIV4',
 })
 
-app.post('/register',async (req,res)=>{
+app.post('/api/register',async (req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const {fullname,username,password} = req.body
     try{
@@ -55,7 +53,7 @@ app.post('/register',async (req,res)=>{
 })
 
 
-app.post('/login',async (req,res)=>{
+app.post('/api/login',async (req,res)=>{
     const {username,password} = req.body
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const loginCheck = await User.findOne({username})
@@ -80,7 +78,7 @@ app.post('/login',async (req,res)=>{
 
 })
 
-app.get('/profile', (req,res)=>{
+app.get('/api/profile', (req,res)=>{
     const {token} = req.cookies
     // if(token){
         jwt.verify(token,secret,{},(err,info)=>{
@@ -91,14 +89,14 @@ app.get('/profile', (req,res)=>{
     // }
 })
 
-app.post('/logout', (req,res)=>{
+app.post('/api/logout', (req,res)=>{
     res.cookie('token','').json('logout')
 
 })
 
 
 
-app.post('/createpost', upload.single('file'), async (req,res)=>{
+app.post('/api/createpost', upload.single('file'), async (req,res)=>{
     if(req.file === undefined){
         res.status(400).json('fill the thumbnail')
     }else{
@@ -193,7 +191,7 @@ const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
     })    
 }
 
-app.put('/post',upload.single('file'),async(req,res)=>{
+app.put('/api/post',upload.single('file'),async(req,res)=>{
     let newPath = null
     const {token} = req.cookies
     const {id,title,summary,tag,content} = req.body
@@ -231,7 +229,7 @@ app.put('/post',upload.single('file'),async(req,res)=>{
     
 })
 
-app.get('/post', async (req,res)=>{
+app.get('/api/post', async (req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     res.json(
         await Post.find()
@@ -241,12 +239,12 @@ app.get('/post', async (req,res)=>{
         )
     
 })
-app.get('/highlight', async (req,res)=>{
+app.get('/api/highlight', async (req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const posts = await Post.find().populate('author',['username'])
     res.json(posts)
 })
-app.get('/detailpost/:id', async(req,res)=>{
+app.get('/api/detailpost/:id', async(req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const {id} = req.params
     try{
@@ -258,7 +256,7 @@ app.get('/detailpost/:id', async(req,res)=>{
     
 })
 
-app.get('/tag/:tagParams', async(req,res)=>{
+app.get('/api/tag/:tagParams', async(req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const {tagParams} = req.params
     try{
@@ -270,7 +268,7 @@ app.get('/tag/:tagParams', async(req,res)=>{
     }
 })
 
-app.get('/search/:query', async(req,res)=>{
+app.get('/api/search/:query', async(req,res)=>{
     const {query} = req.params
  
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")

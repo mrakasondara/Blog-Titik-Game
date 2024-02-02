@@ -8,7 +8,7 @@ const SearchPage = ()=>{
 	const [notFound,setNotFound] = useState(false)
 	const {query} = useParams()
 	useEffect(()=>{
-		fetch(`https://api-tes-rho.vercel.app/search/${query}`).then(response=>{
+		fetch(`https://blog-titikgame.vercel.app/api/search/${query}`).then(response=>{
 			response.json().then(posts=>{
 				if(posts){
 					setPosts(posts)
