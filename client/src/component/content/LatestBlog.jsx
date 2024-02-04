@@ -15,7 +15,7 @@ const LatestBlog = () => {
 
 
   return (
-    <div className="w-full my-3 flex flex-col gap-3  p-5">
+    <div className="w-full my-5 flex flex-col gap-3 p-5">
       <div className="flex items-center gap-2">
         <span className="material-symbols-outlined">
           Feed

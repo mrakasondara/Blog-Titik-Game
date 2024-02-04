@@ -7,6 +7,11 @@ const Sidebar = ({display,width})=>{
  const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
  const {setUserInfo, userInfo} = useContext(UserContext)
  const username = userInfo?.username
+
+const logout = ()=>{
+	fetch('https://blog-titikgame.vercel.app/api/logout')
+}
+
 	return(
 	  	<div className={`${display} flex-col top-0 bottom-0 absolute bg-indigo-500 ${width} z-10 transition py-5 px-3`}>
 		  	<div className="flex items-center justify-between w-full h-10">
@@ -50,7 +55,7 @@ const Sidebar = ({display,width})=>{
               		)}
               		{(username)&&(
               		<>
-	              		<button className="block transition bg-red-500 py-1 px-1 md:px-2 rounded-full  text-white font-bold hover:text-red-500 hover:bg-white hover:border hover:border-red-500 w-1/2" >
+	              		<button className="block transition bg-red-500 py-1 px-1 md:px-2 rounded-full  text-white font-bold hover:text-red-500 hover:bg-white hover:border hover:border-red-500 w-1/2" onClick={logout()}>
 	                		Logout
 	              		</button>
 	              		<button className="block transition bg-transparent py-1 px-1 md:px-2 rounded-full  text-white font-bold border border-white hover:text-white hover:bg-green-500  w-1/2">

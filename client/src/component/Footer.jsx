@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {LogoFacebook,LogoGithub,LogoLinkedin,LogoInstagram} from 'react-ionicons'
 const Footer = () => {
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-indigo-500 h-40 p-3 gap-3 mt-auto">
+    <div className="w-full flex flex-col justify-center items-center bg-indigo-500 h-40 p-3 gap-3 mt-5">
       <div className="w-1/2 my-2">
       <ol className="flex justify-center gap-2">
         <li>
