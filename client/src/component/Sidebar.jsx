@@ -64,7 +64,7 @@ if(navigate){
               		)}
               		{(username)&&(
               		<>
-	              		<button className="block transition bg-red-500 py-1 px-1 md:px-2 rounded-full  text-white font-bold hover:text-red-500 hover:bg-white hover:border hover:border-red-500 w-1/2" onClick={logout()}>
+	              		<button className="block transition bg-red-500 py-1 px-1 md:px-2 rounded-full  text-white font-bold hover:text-red-500 hover:bg-white hover:border hover:border-red-500 w-1/2" onClick={logout}>
 	                		Logout
 	              		</button>
 	              		<button className="block transition bg-transparent py-1 px-1 md:px-2 rounded-full  text-white font-bold border border-white hover:text-white hover:bg-green-500  w-1/2">
