@@ -13,7 +13,7 @@ const LatestBlog = () => {
     })
   },[])
 
-
+ 
   return (
     <div className="w-full my-[5rem] flex flex-col gap-3 p-5">
       <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ const LatestBlog = () => {
       )}
       {!isLoading&&(
         (posts.length >= 1 && posts.map(post=>(
-                    <BlogItem {...post} key={post._id}/>
+            <BlogItem {...post} key={post._id}/>
         )))
       )}
 
