@@ -1,11 +1,11 @@
 import React,{useContext,useEffect,useState} from "react";
-import { Link } from "react-router-dom";
+import { Link , Navigate} from "react-router-dom";
 import {Menu, Close} from 'react-ionicons'
 import {UserContext} from '../UserContext'
 const Header = () => {
   const {setUserInfo, userInfo} = useContext(UserContext)
   const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
-
+  const [navigate,setNavigate] = useState(false)
   useEffect(()=>{
     fetch('https://blog-titikgame.vercel.app/api/profile',{
       credentials: 'include',
@@ -22,6 +22,9 @@ const Header = () => {
     });
     setUserInfo(null)
     setNavigate(true)
+  }
+  if(navigate){
+    <Navigate to={"/"}/>
   }
   const username = userInfo?.username 
   return (

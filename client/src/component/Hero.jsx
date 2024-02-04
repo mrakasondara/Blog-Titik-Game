@@ -14,7 +14,7 @@ const Hero = () => {
   const urlImage = 'https://res.cloudinary.com/dxs0jt3xe/image/upload/v1704103187/'
 
   useEffect(()=>{
-    fetch('https://api-tes-rho.vercel.app/highlight').then(response=>{
+    fetch('https://blog-titikgame.vercel.app/api/highlight').then(response=>{
     response.json().then(post=>{
       const index = Math.floor(Math.random()*post.length)
       setHighlight(post[index])

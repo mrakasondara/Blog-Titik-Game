@@ -1,17 +1,28 @@
 import React,{useState,useContext} from 'react'
-import {Link} from 'react-router-dom'
+import {Link,Navigate} from 'react-router-dom'
 import {Close,Menu,TrendingUp} from 'react-ionicons'
 import {UserContext} from '../UserContext'
 
 const Sidebar = ({display,width})=>{
  const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
  const {setUserInfo, userInfo} = useContext(UserContext)
+ const {setUserInfo, userInfo} = useContext(UserContext)
+
+ const [navigate, setNavigate] = useState(false)
  const username = userInfo?.username
 
 const logout = ()=>{
-	fetch('https://blog-titikgame.vercel.app/api/logout')
+	fetch('https://blog-titikgame.vercel.app/api/logout',{
+		credentials: 'include',
+      	method: 'POST',
+	})
+	setUserInfo(null)
+    setNavigate(true)
+    setIsMenuOpen(false)
 }
-
+if(navigate){
+	<Navigate to={"/"}/>
+}
 	return(
 	  	<div className={`${display} flex-col top-0 bottom-0 absolute bg-indigo-500 ${width} z-10 transition py-5 px-3`}>
 		  	<div className="flex items-center justify-between w-full h-10">
