@@ -6,8 +6,6 @@ import {UserContext} from '../UserContext'
 const Sidebar = ({display,width})=>{
  const {setIsMenuOpen, isMenuOpen} = useContext(UserContext)
  const {setUserInfo, userInfo} = useContext(UserContext)
- const {setUserInfo, userInfo} = useContext(UserContext)
-
  const [navigate, setNavigate] = useState(false)
  const username = userInfo?.username
 
