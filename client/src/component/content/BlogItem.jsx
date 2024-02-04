@@ -7,16 +7,16 @@ const BlogItem = ({_id,thumbnail,title,summary,tag,createdAt,author}) => {
   const urlImage = 'https://res.cloudinary.com/dxs0jt3xe/image/upload/v1704103187/'
 
   return (
-    <div className="min-w-[25%] max-w-[45%] border-2 border-indigo-500 my-5 flex-col lg:max-w-[30%] h-full md:h-auto">
+    <div className="min-w-[25%] max-w-[45%] my-5 flex-col lg:max-w-[30%] h-full md:h-auto">
      <Link to={`/detailpost/${_id}`}>
       <img className="rounded-lg w-full h-2/5" src={`${urlImage}/${thumbnail}`} alt=""/>
       </Link>
-      <div className="flex w-full bg-slate-300 max-h-12 text-elipsis overflow-hidden my-2 justify-center text-center">
+      <div className="flex w-full max-h-12 text-elipsis overflow-hidden my-2 items-center justify-center text-center">
         <Link to={`/detailpost/${_id}`}>
-          <h1 className="text-[17px] font-semibold font-roboto">{title}</h1>
+          <h1 className="text-[17px] text-center font-semibold font-roboto">{title}</h1>
         </Link>
       </div>
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center  mt-2 gap-1 md:gap-0 bg-indigo-500">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center  mt-2 gap-1 md:gap-0">
         <p className="text-[14px] text-center  font-semibold">{author.username}</p>
         <div className="flex justify-center md:justify-start gap-2">
           <CalendarClearOutline
