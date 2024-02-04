@@ -90,6 +90,7 @@ app.get('/api/profile', (req,res)=>{
 })
 
 app.post('/api/logout', (req,res)=>{
+    res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
     res.cookie('token','').json('logout')
 
 })
