@@ -3,9 +3,12 @@ import {useParams,Link,Navigate} from 'react-router-dom'
 import {format} from 'date-fns'
 import {CalendarClearOutline} from 'react-ionicons'
 import Skeleton from '@mui/material/Skeleton';
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 import {UserContext} from '../../UserContext'
 const DetailPost = ()=>{
   	const {userInfo} = useContext(UserContext)
+  	const {updateSuccess, setUpdateSuccess} = useContext(UserContext)
 	const [postDetail,setPostDetail] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [isNotFound, setIsNotFound] = useState(false)
@@ -29,9 +32,19 @@ const DetailPost = ()=>{
   	if(isNotFound){
   		return <Navigate to={'/'}/>
   	}
+  	setTimeout(()=>{
+  		setUpdateSuccess(false)
+  	},3000)
   	// if(!postDetail) return ''
 	return(
 		<div className="w-full flex flex-col justify-center items-center gap-2 p-5">
+			<Snackbar open={updateSuccess}>
+				<Alert
+					severity="success"
+		          	variant="filled"
+		          	sx={{width: '100%'}}
+	          	>Data berhasil diubah</Alert>
+			</Snackbar>
 			{isLoading&&(
 				<div className="w-3/4  flex flex-col gap-2 items-center">
 					<div className="w-full md:w-1/2 flex-col">

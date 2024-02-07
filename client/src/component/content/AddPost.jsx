@@ -2,16 +2,21 @@ import React,{useContext,useState,useEffect} from "react";
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import {Navigate} from 'react-router-dom'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 import {UserContext} from '../../UserContext'
 import Editor from '../Editor'
 
 const AddBlog = () => {
   const {setUserInfo, userInfo} = useContext(UserContext)
+  const {alertSuccess, setAlertSuccess} = useContext(UserContext)
+
   const [title, setTitle] = useState('')
   const [summary, setSummary] = useState('')
   const [tag, setTag] = useState('')
   const [files, setFiles] = useState('')
   const [content, setContent] = useState('')
+  const [errorAlert, setErrorAlert] = useState(false)
   const [redirect, setRedirect] = useState(false)
   useEffect(()=>{
     fetch('https://blog-titikgame.vercel.app/api/profile',{
@@ -40,6 +45,9 @@ const AddBlog = () => {
     })
     if(response.ok){
       setRedirect(true)
+      setAlertSuccess(true)
+    }else{
+      setErrorAlert(true)
     }
   }
   const username = userInfo?.username
@@ -51,6 +59,13 @@ const AddBlog = () => {
     {username && (
     <div className="w-full flex justify-center">
       <div className="w-full md:w-3/4 flex  py-1 px-5 -mt-5">
+          <Snackbar open={errorAlert}>
+            <Alert
+              severity='error'
+              variant="filled"
+              sx={{width: '100%'}}
+            >Harap isi form dengan benar</Alert>
+          </Snackbar>
           <div className="w-full min-h-[30rem] h-auto flex flex-col bg-slate-50 my-[5rem] px-5 py-[3rem] justify-center items-center rounded-lg shadow shadow-slate-300 shadow-lg">
           <h1 className="text-2xl text-slate-700 font-bold text-center">
             Posting Sebuah Blog

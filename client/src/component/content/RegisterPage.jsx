@@ -16,11 +16,9 @@ const RegisterPage = () => {
       headers: {'Content-type':'application/json'},
     })
       if(response.status === 200){
-        // alert('sukes')
         setShowNotif(true)
         setStatusNotif(true)
       }else{
-        // alert('register gagal')
         setShowNotif(true)
         setStatusNotif(false)
       }
@@ -38,7 +36,7 @@ const RegisterPage = () => {
             <Alert severity="success">Register Sukses - <Link to='/login' className="text-black cursor-pointer underline">Halaman Login</Link></Alert>
           )}
           {!statusNotif&&(
-            <Alert severity="error">Register Gagak - <span className="text-black">Username telah digunakan</span></Alert>
+            <Alert severity="error">Register Gagal - <span className="text-black">Username telah digunakan</span></Alert>
           )}
           </div>
         )}

@@ -6,6 +6,7 @@ import {UserContext} from '../../UserContext'
 
 const EditPost = () =>{
   	const {userInfo} = useContext(UserContext)
+  	const {updateSuccess, setUpdateSuccess} = useContext(UserContext)
   	const {id} = useParams()
 		const [title, setTitle] = useState('')
   	const [summary, setSummary] = useState('')
@@ -40,19 +41,19 @@ const EditPost = () =>{
   			data.set('file', files?.[0])
   		}
   		data.set('content',content)
-  		const response = await fetch('http://localhost:4000/post',{
+  		const response = await fetch('https://blog-titikgame.vercel.app/api/post',{
   			method: 'PUT',
   			body: data,
   			credentials: 'include',
   		})
-  		console.log(response)
   		if(response.ok){
 	  		setRedirect(true)
+	  		setUpdateSuccess(true)
   		}
   	}
 
   	if(redirect){
-  		return <Navigate to={'/'}/>
+  		return <Navigate to={`/detailpost/${id}`}/>
   	}
 
 

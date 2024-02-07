@@ -6,15 +6,12 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
-// const fs = require('fs')
-// const env = require('dotenv')
 const User = require('./model/User')
 const Post = require('./model/Post')
 
 const app = express()
 const port = process.env.port || 4000
   
-// const uploadMiddleware = multer({dest: 'uploads/'})
 
 const salt = bcrypt.genSaltSync(10)
 const secret = '1dhds9sdfs982snqwiqdh'
@@ -22,7 +19,7 @@ mongoose.connect('mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mong
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({credentials:true,origin:'https://blog-titikgame.vercel.app'}))
-
+// app.use(cors({credentials:true, origin:'http://localhost:5173'}))
 
 const storage = multer.diskStorage({
     filename: function(req,file,cb){
@@ -44,9 +41,7 @@ app.post('/api/register',async (req,res)=>{
     try{
         const create = await User.create({fullname,username,password:bcrypt.hashSync(password,salt)})
         res.json(create)
-        console.log(create)
     }catch(e){
-        console.log(e)
         res.status(400).json(e)
     }
     
@@ -59,7 +54,6 @@ app.post('/api/login',async (req,res)=>{
     const loginCheck = await User.findOne({username})
     if(loginCheck === null){
         res.status(400).json()
-        // console.log('user not found')
     }else{
         const passOk = bcrypt.compareSync(password,loginCheck.password)
         if(passOk){
@@ -105,11 +99,10 @@ app.post('/api/createpost', upload.single('file'), async (req,res)=>{
         const parts = originalname.split('.')
         const ext = parts[parts.length - 1]
         const lowerExt = ext.toLowerCase()
-        // const newPath = path+'.'+ext
         let postDoc, result
         const {token} = req.cookies
         const {title,summary,tag,content} = req.body
-        // fs.renameSync(path, newPath)
+        mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
         jwt.verify(token,secret,{}, async (err,info)=>{
             if(err)throw err;
             switch(lowerExt){
@@ -172,62 +165,123 @@ app.post('/api/createpost', upload.single('file'), async (req,res)=>{
     }
 })
 
-const editBlog = (token,id,title,summary,tag,newPath,content, postDoc)=>{
-    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
-    jwt.verify(token, secret, {}, async(err,info)=>{
-        if(err) throw err
-        const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id)
-        if(!isAuthor){
-          return  false
-        }
-        await postDoc.updateOne({
-            title,
-            summary,
-            tag,
-            thumbnail: newPath ? newPath : postDoc.thumbnail,
-            content,
-        },{
-            $set: {id: postDoc._id}
-        })
-    })    
-}
-
 app.put('/api/post',upload.single('file'),async(req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     let newPath = null
     const {token} = req.cookies
     const {id,title,summary,tag,content} = req.body
     const postDoc = await Post.findById(id)
+    const img = postDoc.thumbnail.split("/")
+    const getPublicId = img[1]
+    const getId = getPublicId.split('.')
+    const publicId = getId[0]
     if(req.file){
         const {originalname,path} = req.file
         const parts = originalname.split('.')
         const ext = parts[parts.length - 1]
         const lowerExt = ext.toLowerCase()
-        newPath = path+'.'+ext
-        // fs.renameSync(path, newPath)
-        switch(lowerExt){
+        jwt.verify(token,secret, {}, async (err,info)=>{
+            if (err) throw err;
+            const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id)
+            if(!isAuthor){
+                return false
+            }
+            switch(lowerExt){
             case 'jpg':
-            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-            res.status(200).json(postDoc)
-            break;
+                await cloudinary.uploader.destroy(`uploads/${publicId}`, (req,res)=>{
+                    if (err) throw err
+                })
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                newPath = result.public_id + '.'+ result.format
+                await postDoc.updateOne({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: newPath ? newPath : postDoc.thumbnail,
+                    content
+                },{
+                    $set: {id: postDoc._id}
+                })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+                res.status(200).json(postDoc)
+                break;
             case 'jpeg':
-            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-            res.status(200).json(postDoc)
-            break;
+                await cloudinary.uploader.destroy(`uploads/${publicId}`, (req,res)=>{
+                    if (err) throw err
+                })
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                newPath = result.public_id + '.'+ result.format
+                await postDoc.updateOne({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: newPath ? newPath : postDoc.thumbnail,
+                    content
+                },{
+                    $set: {id: postDoc._id}
+                })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+                res.status(200).json(postDoc)
+                break;
             case 'png':
-            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-            res.status(200).json(postDoc)
-            break;
+                await cloudinary.uploader.destroy(`uploads/${publicId}`, (req,res)=>{
+                    if (err) throw err
+                })
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                newPath = result.public_id + '.'+ result.format
+                await postDoc.updateOne({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: newPath ? newPath : postDoc.thumbnail,
+                    content
+                },{
+                    $set: {id: postDoc._id}
+                })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+                res.status(200).json(postDoc)
+                break;
             case 'webp':
-            editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-            res.status(200).json(postDoc)
-            break;
+                await cloudinary.uploader.destroy(`uploads/${publicId}`, (req,res)=>{
+                    if (err) throw err
+                })
+                result = await cloudinary.uploader.upload(path, {folder: 'uploads'})
+                newPath = result.public_id + '.'+ result.format
+                await postDoc.updateOne({
+                    title,
+                    summary,
+                    tag,
+                    thumbnail: newPath ? newPath : postDoc.thumbnail,
+                    content
+                },{
+                    $set: {id: postDoc._id}
+                })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+                res.status(200).json(postDoc)
+                break;
             default:
-            res.status(400).json('image only')
-        }
+                res.status(404).json('image only')
+            } 
+        })
+    }else{
+        jwt.verify(token,secret, {}, async(err,info)=>{
+            if(err) throw err;
+            const isAuthor = JSON.stringify(info.id) === JSON.stringify(postDoc.author)
+            if(!isAuthor){
+                return false
+            }
+            await postDoc.updateOne({
+                title,
+                summary, 
+                tag,
+                content
+            },{
+                $set: {id: postDoc._id}
+            })
+            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+            res.status(200).json(postDoc)
+        })
     }
-    editBlog(token,id,title,summary,tag,newPath,content,postDoc)
-    res.status(200).json(postDoc)
-    
 })
 
 app.get('/api/post', async (req,res)=>{
@@ -249,7 +303,7 @@ app.get('/api/detailpost/:id', async(req,res)=>{
     mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
     const {id} = req.params
     try{
-        const detail = await Post.findById(id).populate('author',['username'])
+        const detail = await Post.findById(id).populate('author',['username']) 
         res.json(detail)
     }catch(e){
         res.status(404).json(e)
@@ -285,6 +339,7 @@ app.get('/api/search/:query', async(req,res)=>{
     
 
 })
+
 
 app.listen(port, ()=>{
     console.log(`App Listening on Port ${port}`)
