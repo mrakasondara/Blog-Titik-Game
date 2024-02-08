@@ -77,7 +77,7 @@ if(navigate){
 	  		</div>
 	  		<nav className="flex-col my-10 px-10">
 	  			<ol className="flex flex-col gap-5 text-slate-50 font-bold  text-xl">
-	  				<Link to="" className="">
+	  				<Link to="/trending" onClick={()=> setIsMenuOpen(!isMenuOpen)}>
 		  				<li className="flex items-center gap-5 transition">
 		  					<TrendingUp
 				            color={'#ffffff'}

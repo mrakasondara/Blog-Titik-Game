@@ -1,7 +1,7 @@
 import React,{useContext,useState,useEffect} from 'react'
 import {useParams,Link,Navigate} from 'react-router-dom'
 import {format} from 'date-fns'
-import {CalendarClearOutline} from 'react-ionicons'
+import {CalendarClearOutline, EyeOutline} from 'react-ionicons'
 import Skeleton from '@mui/material/Skeleton';
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
@@ -35,7 +35,6 @@ const DetailPost = ()=>{
   	setTimeout(()=>{
   		setUpdateSuccess(false)
   	},3000)
-  	// if(!postDetail) return ''
 	return(
 		<div className="w-full flex flex-col justify-center items-center gap-2 p-5">
 			<Snackbar open={updateSuccess}>
@@ -77,6 +76,15 @@ const DetailPost = ()=>{
 				<div className="w-full flex-col text-sm text-slate-400">
 					<div className="w-full flex justify-between">
 						<p>Author</p>
+						<div className="flex gap-2">
+							<EyeOutline
+								color={'#858585'}
+								height="19px"
+								width="19px"
+							/>
+							<span className="">{postDetail?.views}</span>
+						</div>
+						
 						<div className="flex items-center gap-2">
 							<CalendarClearOutline
 								color={'#858585'}
@@ -86,6 +94,7 @@ const DetailPost = ()=>{
 							<p>{format(new Date(postDetail?.createdAt),'MMM d, yyyy, HH:mm')}</p>
 						</div>
 					</div>
+
 					<p className="text-black text-[15px] font-bold">{postDetail?.author.username}</p>
 					<div className="text-black text-[17px] mt-5 text-justify w-full" dangerouslySetInnerHTML={{__html:postDetail?.content}}></div>
 				</div>

@@ -66,7 +66,6 @@ app.post('/api/login',async (req,res)=>{
             })
         }else{
             res.status(400).json()
-            // console.log('wrong password')
         }
     }
 
@@ -114,6 +113,7 @@ app.post('/api/createpost', upload.single('file'), async (req,res)=>{
                     tag,
                     thumbnail: result.public_id+ '.' + result.format,
                     content,
+                    views: 0,
                     author:info.id,
                 })
             res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
@@ -127,6 +127,7 @@ app.post('/api/createpost', upload.single('file'), async (req,res)=>{
                     tag,
                     thumbnail: result.public_id+ '.' + result.format,
                     content,
+                    views: 0,
                     author:info.id,
                 })
             res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
@@ -140,6 +141,7 @@ app.post('/api/createpost', upload.single('file'), async (req,res)=>{
                     tag,
                     thumbnail: result.public_id+ '.' + result.format,
                     content,
+                    views: 0,
                     author:info.id,
                 })
             res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
@@ -153,6 +155,7 @@ app.post('/api/createpost', upload.single('file'), async (req,res)=>{
                     tag,
                     thumbnail: result.public_id+ '.' + result.format,
                     content,
+                    views: 0,
                     author:info.id,
                 })
             res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
@@ -256,7 +259,7 @@ app.put('/api/post',upload.single('file'),async(req,res)=>{
                 },{
                     $set: {id: postDoc._id}
                 })
-            res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+                res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
                 res.status(200).json(postDoc)
                 break;
             default:
@@ -304,7 +307,13 @@ app.get('/api/detailpost/:id', async(req,res)=>{
     const {id} = req.params
     try{
         const detail = await Post.findById(id).populate('author',['username']) 
-        res.json(detail)
+        const addValue = detail.views + 1
+        await detail.updateOne({
+            views: addValue
+        },{
+            $set: {id: detail._id}
+        })
+        res.status(200).json(detail)
     }catch(e){
         res.status(404).json(e)
     }
@@ -331,8 +340,8 @@ app.get('/api/search/:query', async(req,res)=>{
         const searchByTitle = await Post.find({ title: { $regex: query, $options: "i" } }).populate('author', ['username']) 
         const searchBySummary = await Post.find({ summary: { $regex: query, $options: "i" } }).populate('author', ['username']) 
         const removeDuplicate = Object.assign(searchByTitle,searchBySummary)
+       
         res.json(removeDuplicate)
-
     }catch(e){
         res.json('result not found').status(404)
     }
@@ -340,6 +349,15 @@ app.get('/api/search/:query', async(req,res)=>{
 
 })
 
+app.get('/api/trending', async(req,res)=>{
+    mongoose.connect("mongodb+srv://rakasondara21:rakasondara21@project.ezg1faq.mongodb.net/?retryWrites=true&w=majority")
+    res.header("Access-Control-Allow-Origin", "https://blog-titik-game.vercel.app")
+    res.json(await Post.find({views: {$gte: 5}})
+        .populate('author', ['username'])
+        .sort({views: -1})
+        .limit(5)
+        )
+})
 
 app.listen(port, ()=>{
     console.log(`App Listening on Port ${port}`)

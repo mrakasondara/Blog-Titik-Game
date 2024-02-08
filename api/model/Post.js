@@ -7,6 +7,7 @@ const PostSchema = new Schema({
 	tag: {type: String},
 	thumbnail: {type: String},
 	content:{type: String},
+	views: {type: Number},
 	author:{type: Schema.Types.ObjectId, ref:'User'}
 },{
 	timestamps: true,

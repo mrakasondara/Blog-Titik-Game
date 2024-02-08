@@ -42,7 +42,7 @@ const Header = () => {
               <span className="material-symbols-outlined">
                 whatshot
               </span>
-              <Link to="" className="text-sm md:text-base">
+              <Link to="/trending" className="text-sm md:text-base">
                 Trending News
               </Link>
             </li>
